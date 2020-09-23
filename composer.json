@@ -1,0 +1,12 @@
+{
+    "name": "lyyti/api_wrapper",
+    "description": "Wrapper to make Lyyti REST API easier to use",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vaintti",
+            "email": "antti.jk.vainikka@gmail.com"
+        }
+    ]
+}

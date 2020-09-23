@@ -48,6 +48,6 @@ class LyytiApi
     public function getEvents()
     {
         $response = $this->get("events?as_array=1");
-        return json_decode($response);
+        return json_decode($response)->results;
     }
 }

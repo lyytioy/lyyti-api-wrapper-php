@@ -44,4 +44,10 @@ class LyytiApi
         curl_close($ch);
         return $data;
     }
+
+    public function getEvents()
+    {
+        $response = $this->get("events?as_array=1");
+        return json_decode($response);
+    }
 }

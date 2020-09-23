@@ -1,8 +1,10 @@
 {
     "name": "lyyti/api_wrapper",
     "description": "Wrapper to make Lyyti REST API easier to use",
+    "keywords": ["lyyti", "rest", "api", "wrapper"],
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/lyytioy/lyyti-api-wrapper-php",
     "authors": [
         {
             "name": "Vaintti",

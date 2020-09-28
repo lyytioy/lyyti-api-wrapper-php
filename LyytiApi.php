@@ -50,4 +50,10 @@ class LyytiApi
         $response = $this->get("events?as_array=1");
         return json_decode($response)->results;
     }
+
+    public function getParticipants($event)
+    {
+        $response = $this->get("events/$event->event_id/participants?as_array=1&show_answers=1");
+        return json_decode($response)->results;
+    }
 }

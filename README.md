@@ -1,6 +1,13 @@
 # lyyti-api-wrapper-php
 Wrapper for Lyyti API to make it simpler to use
 
+Currently supported api resources:
+```
+events                         -> getEvents()
+events/{event_id}/participants -> getParticipants($event)
+standard_questions             -> getStandardQuestions($event?)
+```
+
 Basic usage example:
 
 ```php

@@ -56,4 +56,11 @@ class LyytiApi
         $response = $this->get("events/$event->event_id/participants?as_array=1&show_answers=1");
         return json_decode($response)->results;
     }
+
+    public function getStandardQuestions($event = null) {
+        $call_string = "standard_questions?as_array=1";
+        if ($event != null) $call_string .= "&event_id=$event->event_id";
+        $response = $this->get($call_string);
+        return json_decode($response)->results;
+    }
 }

@@ -1,14 +1,19 @@
 <?php
 
+include "CachedResponse.php";
+
 class LyytiApi
 {
+    private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
     private $api_root = "https://api.lyyti.com/v2/";
-    private $private_key, $public_key;
+    private $response_cache = array();
 
-    public function __construct($private_key, $public_key)
+    public function __construct($private_key, $public_key, $cache_enabled = true, $cache_lifetime_minutes = 10)
     {
         $this->private_key = $private_key;
         $this->public_key = $public_key;
+        $this->cache_enabled = $cache_enabled;
+        $this->cache_lifetime_minutes = $cache_lifetime_minutes;
     }
 
     private function getAuthHeader($call_string)
@@ -30,8 +35,23 @@ class LyytiApi
         return "Authorization: LYYTI-API-V2 public_key=$this->public_key, timestamp=$timestamp, signature=$signature";
     }
 
+    private function getResponseFromCache($call_string) {
+        if (array_key_exists($call_string, $this->response_cache)) {
+            $cached_response = $this->response_cache[$call_string];
+            if ($cached_response->timestamp + $this->cache_lifetime_minutes * 60 >= time()) {
+                return $cached_response->response;
+            }
+        }
+        return null;
+    }
+
     public function get($call_string)
     {
+        if ($this->cache_enabled) {
+            $cached_response = $this->getResponseFromCache($call_string);
+            if ($cached_response != null) return $cached_response;
+        }
+
         $headers = [
             "Accept: application/json; charset=utf-8",
             $this->getAuthHeader($call_string)
@@ -42,6 +62,11 @@ class LyytiApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $data = curl_exec($ch);
         curl_close($ch);
+
+        if ($this->cache_enabled) {
+            $this->response_cache[$call_string] = new CachedResponse($data);
+        }
+
         return $data;
     }
 

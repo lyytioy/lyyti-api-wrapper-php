@@ -1,6 +1,6 @@
-<?php
+<?php namespace LyytiApi;
 
-include "CachedResponse.php";
+require __DIR__ . '/../vendor/autoload.php';
 
 class LyytiApi
 {

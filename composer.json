@@ -10,5 +10,8 @@
             "name": "Vaintti",
             "email": "antti.jk.vainikka@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {"LyytiApi\\": "src/"}
+    }
 }

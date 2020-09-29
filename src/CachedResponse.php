@@ -1,4 +1,4 @@
-<?php
+<?php namespace LyytiApi;
 
 class CachedResponse {
     public $timestamp, $response;

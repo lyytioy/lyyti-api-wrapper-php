@@ -5,7 +5,7 @@ Currently supported api resources:
 ```
 events                         -> getEvents()
 events/{event_id}/participants -> getParticipants($event)
-standard_questions             -> getStandardQuestions($event?)
+standard_questions             -> getStandardQuestions(?$event)
 ```
 
 LyytiApi object caches responses for 10 minutes by default. You can configure this behavior in the constructor.

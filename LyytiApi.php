@@ -38,11 +38,22 @@ class LyytiApi
     private function getResponseFromCache($call_string) {
         if (array_key_exists($call_string, $this->response_cache)) {
             $cached_response = $this->response_cache[$call_string];
-            if ($cached_response->timestamp + $this->cache_lifetime_minutes * 60 >= time()) {
+            if (!$this->cacheIsExpired($cached_response)) {
                 return $cached_response->response;
             }
         }
+        $this->removeExpiredCaches();
         return null;
+    }
+    
+    private function cacheIsExpired($cached_response) {
+        return $cached_response->timestamp + $this->cache_lifetime_minutes * 60 < time();
+    }
+
+    private function removeExpiredCaches() {
+        $this->response_cache = array_filter($this->response_cache, function ($value) {
+            return !$this->cacheIsExpired($value);
+        });
     }
 
     public function get($call_string)

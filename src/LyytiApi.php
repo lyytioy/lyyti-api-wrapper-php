@@ -43,7 +43,6 @@ class LyytiApi
             }
         }
         $this->removeExpiredCaches();
-        return null;
     }
     
     private function cacheIsExpired($cached_response) {

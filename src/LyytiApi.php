@@ -32,7 +32,7 @@ class LyytiApi
             $this->private_key
         );
 
-        return "Authorization: LYYTI-API-V2 public_key=$this->public_key, timestamp=$timestamp, signature=$signature";
+        return "Authorization: LYYTI-API-V2 public_key={$this->public_key}, timestamp={$timestamp}, signature={$signature}";
     }
 
     private function getResponseFromCache($call_string) {
@@ -90,7 +90,7 @@ class LyytiApi
 
     public function getParticipants($event)
     {
-        $response = $this->get("events/$event->event_id/participants", ["as_array" => 1, "show_answers" => 1]);
+        $response = $this->get("events/{$event->event_id}/participants", ["as_array" => 1, "show_answers" => 1]);
         return json_decode($response)->results;
     }
 

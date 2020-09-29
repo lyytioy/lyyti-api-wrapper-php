@@ -55,8 +55,10 @@ class LyytiApi
         });
     }
 
-    public function get($call_string)
+    public function get($call_string, $params = array())
     {
+        $call_string = $call_string."?".http_build_query($params);
+
         if ($this->cache_enabled) {
             $cached_response = $this->getResponseFromCache($call_string);
             if ($cached_response != null) return $cached_response;
@@ -82,20 +84,20 @@ class LyytiApi
 
     public function getEvents()
     {
-        $response = $this->get("events?as_array=1");
+        $response = $this->get("events", ["as_array" => 1]);
         return json_decode($response)->results;
     }
 
     public function getParticipants($event)
     {
-        $response = $this->get("events/$event->event_id/participants?as_array=1&show_answers=1");
+        $response = $this->get("events/$event->event_id/participants", ["as_array" => 1, "show_answers" => 1]);
         return json_decode($response)->results;
     }
 
     public function getStandardQuestions($event = null) {
-        $call_string = "standard_questions?as_array=1";
-        if ($event != null) $call_string .= "&event_id=$event->event_id";
-        $response = $this->get($call_string);
+        $params = ["as_array" => 1];
+        if ($event != null) $params["event_id"] = $event->event_id;
+        $response = $this->get("standard_questions", $params);
         return json_decode($response)->results;
     }
 }

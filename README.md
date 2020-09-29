@@ -8,6 +8,13 @@ events/{event_id}/participants -> getParticipants($event)
 standard_questions             -> getStandardQuestions($event?)
 ```
 
+LyytiApi object caches responses for 10 minutes by default. You can configure this behavior in the constructor.
+```php
+// new LyytiApi(private key, public key, cache enabled boolean, cache lifetime in minutes)
+// Example with 5 minute cache lifetime
+$lyyti_api = new LyytiApi("private_key", "public_key", true, 5);
+```
+
 Basic usage example:
 
 ```php

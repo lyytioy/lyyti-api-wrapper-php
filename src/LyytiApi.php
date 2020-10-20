@@ -1,4 +1,6 @@
-<?php namespace LyytiApi;
+<?php
+declare(strict_types=1);
+namespace LyytiApi;
 
 class LyytiApi
 {
@@ -6,7 +8,7 @@ class LyytiApi
     private $api_root = "https://api.lyyti.com/v2/";
     private $response_cache = array();
 
-    public function __construct($private_key, $public_key, $cache_enabled = true, $cache_lifetime_minutes = 10)
+    public function __construct(string $private_key, string $public_key, bool $cache_enabled = true, int $cache_lifetime_minutes = 10)
     {
         $this->private_key = $private_key;
         $this->public_key = $public_key;
@@ -14,7 +16,7 @@ class LyytiApi
         $this->cache_lifetime_minutes = $cache_lifetime_minutes;
     }
 
-    private function getAuthHeader($call_string)
+    private function getAuthHeader(string $call_string)
     {
         $timestamp = time();
 
@@ -33,7 +35,7 @@ class LyytiApi
         return "Authorization: LYYTI-API-V2 public_key={$this->public_key}, timestamp={$timestamp}, signature={$signature}";
     }
 
-    private function getResponseFromCache($call_string) {
+    private function getResponseFromCache(string $call_string) {
         if (array_key_exists($call_string, $this->response_cache)) {
             $cached_response = $this->response_cache[$call_string];
             if (!$this->cacheIsExpired($cached_response)) {
@@ -43,7 +45,7 @@ class LyytiApi
         $this->removeExpiredCaches();
     }
     
-    private function cacheIsExpired($cached_response) {
+    private function cacheIsExpired(CachedResponse $cached_response) {
         return $cached_response->timestamp + $this->cache_lifetime_minutes * 60 < time();
     }
 
@@ -53,7 +55,7 @@ class LyytiApi
         });
     }
 
-    public function get($call_string, $params = array())
+    public function get(string $call_string, array $params = array())
     {
         $call_string = $call_string."?".http_build_query($params);
 

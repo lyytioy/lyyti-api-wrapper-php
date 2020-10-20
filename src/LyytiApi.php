@@ -1,7 +1,5 @@
 <?php namespace LyytiApi;
 
-require __DIR__ . '/../vendor/autoload.php';
-
 class LyytiApi
 {
     private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;

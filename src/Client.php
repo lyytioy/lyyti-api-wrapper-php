@@ -88,13 +88,13 @@ class Client
         return json_decode($response)->results;
     }
 
-    public function getParticipants($event)
+    public function getParticipants(object $event)
     {
         $response = $this->get("events/{$event->event_id}/participants", ["as_array" => 1, "show_answers" => 1]);
         return json_decode($response)->results;
     }
 
-    public function getStandardQuestions($event = null) {
+    public function getStandardQuestions(object $event = null) {
         $params = ["as_array" => 1];
         if ($event != null) $params["event_id"] = $event->event_id;
         $response = $this->get("standard_questions", $params);

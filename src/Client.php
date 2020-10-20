@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace LyytiApi;
 
-class LyytiApi
+class Client
 {
     private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
     private $api_root = "https://api.lyyti.com/v2/";

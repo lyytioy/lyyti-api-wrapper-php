@@ -5,7 +5,7 @@ namespace LyytiApi;
 class Response {
     public $data, $http_code, $error;
 
-    function __construct($data, ?int $http_code, ?string $error = null)
+    function __construct($data, int $http_code, ?string $error = null)
     {
         $this->data = $data;
         $this->http_code = $http_code;

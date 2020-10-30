@@ -73,31 +73,35 @@ class Client
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $data = curl_exec($ch);
+        $http_code = curl_getinfo($ch)["http_code"];
         curl_close($ch);
 
         if ($this->cache_enabled) {
             $this->response_cache[$call_string] = new CachedResponse($data);
         }
 
-        return $data;
+        return $response = new Response($data, $http_code);;
     }
 
     public function getEvents()
     {
         $response = $this->get("events", ["as_array" => 1]);
-        return json_decode($response)->results;
+        if ($response->http_code >= 300) return new Response(null, $response->http_code, json_decode($response->data)->error);
+        return new Response(json_decode($response->data)->results, $response->http_code);
     }
 
     public function getParticipants(object $event)
     {
         $response = $this->get("events/{$event->event_id}/participants", ["as_array" => 1, "show_answers" => 1]);
-        return json_decode($response)->results;
+        if ($response->http_code >= 300) return new Response(null, $response->http_code, json_decode($response->data)->error);
+        return new Response(json_decode($response->data)->results, $response->http_code);
     }
 
     public function getStandardQuestions(object $event = null) {
         $params = ["as_array" => 1];
         if ($event != null) $params["event_id"] = $event->event_id;
         $response = $this->get("standard_questions", $params);
-        return json_decode($response)->results;
+        if ($response->http_code >= 300) return new Response(null, $response->http_code, json_decode($response->data)->error);
+        return new Response(json_decode($response->data)->results, $response->http_code);
     }
 }

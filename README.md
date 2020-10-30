@@ -15,16 +15,16 @@ LyytiApi object caches responses for 10 minutes by default. You can configure th
 $lyyti_api = new LyytiApi\Client"private_key", "public_key", true, 5);
 ```
 
-Responses come as response objects that can contain http status code, data and error
+Responses come as response objects that can contain http status code, data and error.
 ```php
 $lyyti_api = new LyytiApi\Client("private_key", "public_key");
 $response = $lyyti_api->getEvents();
 
-// Events list if the request was successful
+// Events list if the request was successful (Dynamic type. In this case type = ?object)
 $data = $response->data;
-// What is the response code for the request?
+// Http code for the request (type = int)
 $http_code = $response->http_code;
-// Why did the request fail?
+// Error text if the request failed (type = ?string)
 $error = $response->error;
 ```
 

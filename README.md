@@ -20,7 +20,7 @@ Responses come as response objects that can contain http status code, data and e
 $lyyti_api = new LyytiApi\Client("private_key", "public_key");
 $response = $lyyti_api->getEvents();
 
-// Events list if the request was successful (Dynamic type. In this case type = ?object)
+// Events list if the request was successful (Dynamic type. In this case type = ?array)
 $data = $response->data;
 // Http code for the request (type = int)
 $http_code = $response->http_code;

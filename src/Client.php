@@ -80,7 +80,7 @@ class Client
             $this->response_cache[$call_string] = new CachedResponse($data);
         }
 
-        return $response = new Response($data, $http_code);;
+        return $response = new Response($data, $http_code);
     }
 
     public function getEvents()

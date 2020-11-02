@@ -12,7 +12,7 @@ LyytiApi object caches responses for 10 minutes by default. You can configure th
 ```php
 // new LyytiApi(private key, public key, cache enabled boolean, cache lifetime in minutes)
 // Example with 5 minute cache lifetime
-$lyyti_api = new LyytiApi\Client"private_key", "public_key", true, 5);
+$lyyti_api = new LyytiApi\Client("private_key", "public_key", true, 5);
 ```
 
 Responses come as response objects that can contain http status code, data and error.

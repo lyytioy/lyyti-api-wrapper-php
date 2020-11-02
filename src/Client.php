@@ -5,7 +5,7 @@ namespace LyytiApi;
 class Client
 {
     private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
-    private $api_root = "https://api.lyyti.com/v2/";
+    private const API_ROOT = "https://api.lyyti.com/v2/";
     private $response_cache = array();
 
     public function __construct(string $private_key, string $public_key, bool $cache_enabled = true, int $cache_lifetime_minutes = 10)
@@ -69,7 +69,7 @@ class Client
             $this->getAuthHeader($call_string)
         ];
 
-        $ch = curl_init($this->api_root.$call_string);
+        $ch = curl_init($this::API_ROOT.$call_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $data = curl_exec($ch);

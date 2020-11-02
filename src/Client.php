@@ -4,8 +4,8 @@ namespace LyytiApi;
 
 class Client
 {
-    private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
     private const API_ROOT = "https://api.lyyti.com/v2/";
+    private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
     private $response_cache = array();
 
     public function __construct(string $private_key, string $public_key, bool $cache_enabled = true, int $cache_lifetime_minutes = 10)

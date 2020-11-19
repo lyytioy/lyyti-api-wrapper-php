@@ -1,5 +1,5 @@
 {
-    "name": "lyyti/api_wrapper",
+    "name": "lyyti/api_v2_wrapper",
     "description": "Wrapper to make Lyyti REST API easier to use",
     "keywords": ["lyyti", "rest", "api", "wrapper"],
     "type": "library",
@@ -12,6 +12,6 @@
         }
     ],
     "autoload": {
-        "psr-4": {"LyytiApi\\": "src/"}
+        "psr-4": {"Lyyti\\API\\v2\\Client\\": "src/"}
     }
 }

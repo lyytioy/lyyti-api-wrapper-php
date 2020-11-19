@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace LyytiApi;
+namespace Lyyti\API\v2\Client;
 
 class Client
 {

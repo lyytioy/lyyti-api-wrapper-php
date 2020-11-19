@@ -1,4 +1,4 @@
-# lyyti-api-wrapper-php
+# Lyyti API PHP wrapper
 Wrapper for Lyyti API to make it simpler to use
 
 Currently supported api resources:
@@ -6,6 +6,11 @@ Currently supported api resources:
 events                         -> getEvents()
 events/{event_id}/participants -> getParticipants($event)
 standard_questions             -> getStandardQuestions(?$event)
+```
+
+Examples expect you to have imported the namespace by using
+```php
+use Lyyti\API\v2\Client as LyytiApi;
 ```
 
 LyytiApi object caches responses for 10 minutes by default. You can configure this behavior in the constructor.

@@ -16,7 +16,8 @@ use Lyyti\API\v2\Client as LyytiApi;
 Client memory caches responses for 10 minutes by default (does not persist if the Client object is deallocated).
 You can configure this behavior by passing Cache object to the Client.
 ```php
-// new LyytiApi(private key, public key, cache)
+// Client(private_key, public_key, cache)
+// Cache(?int lifetime_minutes = 10, ?string file)
 // Example with 5 minute cache that is stored in a file to make it persistent
 $lyyti_api = new LyytiApi\Client("private_key", "public_key", new LyytiApi\Cache(1, "cachefile.json"));
 ```

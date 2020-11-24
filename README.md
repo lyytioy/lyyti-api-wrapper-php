@@ -28,7 +28,7 @@ $response = $lyyti_api->getEvents();
 
 // Events list if the request was successful (Dynamic type. In this case type = ?array)
 $data = $response->data;
-// Http code for the request (type = int)
+// Http code for the response (type = int)
 $http_code = $response->http_code;
 // Error text if the request failed (type = ?string)
 $error = $response->error;

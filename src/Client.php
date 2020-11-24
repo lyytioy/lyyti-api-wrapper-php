@@ -5,15 +5,15 @@ namespace Lyyti\API\v2\Client;
 class Client
 {
     private const API_ROOT = "https://api.lyyti.com/v2/";
-    private $private_key, $public_key, $cache_enabled, $cache_lifetime_minutes;
-    private $response_cache = array();
+    private $private_key, $public_key, $cache;
 
-    public function __construct(string $private_key, string $public_key, bool $cache_enabled = true, int $cache_lifetime_minutes = 10)
+    public function __construct(string $private_key, string $public_key, ?Cache $cache = null)
     {
         $this->private_key = $private_key;
         $this->public_key = $public_key;
-        $this->cache_enabled = $cache_enabled;
-        $this->cache_lifetime_minutes = $cache_lifetime_minutes;
+        $this->cache = $cache;
+
+        if ($cache == null) $this->cache = new Cache();
     }
 
     private function getAuthHeader(string $call_string)
@@ -36,30 +36,14 @@ class Client
     }
 
     private function getResponseFromCache(string $call_string) {
-        if (array_key_exists($call_string, $this->response_cache)) {
-            $cached_response = $this->response_cache[$call_string];
-            if (!$this->cacheIsExpired($cached_response)) {
-                return $cached_response->response;
-            }
-        }
-        $this->removeExpiredCaches();
+        if (isset($this->cache)) return $this->cache->getCachedResponse($call_string);
     }
     
-    private function cacheIsExpired(CachedResponse $cached_response) {
-        return $cached_response->timestamp + $this->cache_lifetime_minutes * 60 < time();
-    }
-
-    private function removeExpiredCaches() {
-        $this->response_cache = array_filter($this->response_cache, function ($value) {
-            return !$this->cacheIsExpired($value);
-        });
-    }
-
     public function get(string $call_string, array $params = array())
     {
         $call_string = $call_string."?".http_build_query($params);
 
-        if ($this->cache_enabled) {
+        if (isset($this->cache)) {
             $cached_response = $this->getResponseFromCache($call_string);
             if ($cached_response != null) return $cached_response;
         }
@@ -75,12 +59,11 @@ class Client
         $data = curl_exec($ch);
         $http_code = curl_getinfo($ch)["http_code"];
         curl_close($ch);
+        $response = new Response($data, $http_code);
 
-        if ($this->cache_enabled) {
-            $this->response_cache[$call_string] = new CachedResponse($data);
-        }
+        if (isset($this->cache)) $this->cache->cacheResponse($call_string, $response);
 
-        return $response = new Response($data, $http_code);
+        return $response;
     }
 
     public function getEvents()

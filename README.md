@@ -13,11 +13,12 @@ Examples expect you to have imported the namespace by using
 use Lyyti\API\v2\Client as LyytiApi;
 ```
 
-LyytiApi object caches responses for 10 minutes by default. You can configure this behavior in the constructor.
+LyytiApi memory caches responses for 10 minutes by default (does not persist if the Client object is deallocated).
+You can configure this behavior by passing Cache object to the Client.
 ```php
-// new LyytiApi(private key, public key, cache enabled boolean, cache lifetime in minutes)
-// Example with 5 minute cache lifetime
-$lyyti_api = new LyytiApi\Client("private_key", "public_key", true, 5);
+// new LyytiApi(private key, public key, cache)
+// Example with 5 minute cache that is stored in a file to make it persistent
+$lyyti_api = new LyytiApi\Client("private_key", "public_key", new LyytiApi\Cache(1, "cachefile.json"));
 ```
 
 Responses come as response objects that can contain http status code, data and error.

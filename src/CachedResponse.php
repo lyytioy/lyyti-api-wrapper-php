@@ -5,9 +5,15 @@ namespace Lyyti\API\v2\Client;
 class CachedResponse {
     public $timestamp, $response;
 
-    function __construct(string $response)
+    function __construct(Response $response, ?int $timestamp = null)
     {
-        $this->timestamp = time();
         $this->response = $response;
+
+        if (isset($timestamp)) $this->timestamp = $timestamp;
+        else $this->timestamp = time();
+    }
+
+    static function fromArray(array $input) {
+        return new CachedResponse(Response::fromArray($input["response"]), $input["timestamp"]);
     }
 }

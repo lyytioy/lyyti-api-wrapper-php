@@ -11,4 +11,8 @@ class Response {
         $this->http_code = $http_code;
         $this->error = $error;
     }
+
+    static function fromArray(array $input) {
+        return new Response($input["data"], $input["http_code"], $input["error"]);
+    }
 }

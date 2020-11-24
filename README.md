@@ -21,7 +21,7 @@ You can configure this behavior by passing Cache object to the Client.
 $lyyti_api = new LyytiApi\Client("private_key", "public_key", new LyytiApi\Cache(1, "cachefile.json"));
 ```
 
-Responses come as response objects that can contain http status code, data and error.
+Responses come as Response objects that contain http status code and depending if the API request succeeded data and error.
 ```php
 $lyyti_api = new LyytiApi\Client("private_key", "public_key");
 $response = $lyyti_api->getEvents();
